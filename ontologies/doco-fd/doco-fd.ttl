@@ -1,0 +1,185 @@
+@prefix : <http://purl.org/doco-fd/> .
+@prefix doco: <http://purl.org/spar/doco/> .
+@prefix doco-fd: <http://purl.org/doco-fd/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+#    Ontology Metadata
+#################################################################
+
+<http://purl.org/doco-fd/> a owl:Ontology ;
+    dc:creator "David Blass"^^xsd:string ;
+    dc:date "2026-01-13"^^xsd:date ;
+    dc:title "DoCO-FD, the Document Components Ontology - Form Documents Extension"@en ;
+    dc:description "An extension to the Document Components Ontology (DoCO) that provides structured vocabulary for form-based documents, including business forms, government documents, and structured data entry forms. This ontology fills gaps in DoCO by adding classes and properties specific to form fields, table internals, and key-value pairs commonly found in business and administrative documents."@en ;
+    dc:rights "This work is distributed under a Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/)."@en ;
+    rdfs:comment "DoCO-FD extends the Document Components Ontology to support form-based documents. It is designed to work alongside DoCO and Schema.org for comprehensive semantic markup of structured documents."@en ;
+    owl:imports <http://purl.org/spar/doco> ;
+    owl:versionInfo "1.0.0"^^xsd:string ;
+    owl:versionIRI <http://purl.org/doco-fd/1.0.0> .
+
+#################################################################
+#    Classes - Form Structure
+#################################################################
+
+doco-fd:FormSection a owl:Class ;
+    rdfs:label "form section"@en ;
+    rdfs:comment "A logical grouping of related form fields within a document, typically representing a coherent unit of information collection (e.g., 'Personal Information', 'Billing Address', 'Payment Details')."@en ;
+    rdfs:subClassOf doco:Section ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:FormField a owl:Class ;
+    rdfs:label "form field"@en ;
+    rdfs:comment "A structured element for data entry or display, consisting of a label and a value. Form fields are the atomic units of information in form-based documents."@en ;
+    rdfs:subClassOf doco:TextBox ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:KeyValuePair a owl:Class ;
+    rdfs:label "key-value pair"@en ;
+    rdfs:comment "A semantic pairing of a label (key) and its associated data value, representing a single piece of structured information in a document. This is a fundamental pattern in form documents where a descriptive label is associated with a specific data value."@en ;
+    rdfs:subClassOf doco:TextBox ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Classes - Document Parts
+#################################################################
+
+doco-fd:Header a owl:Class ;
+    rdfs:label "header"@en ;
+    rdfs:comment "The top section of a document containing identifying information, logos, document titles, and metadata. Headers typically appear on each page of multi-page documents."@en ;
+    rdfs:subClassOf doco:FrontMatter ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:Footer a owl:Class ;
+    rdfs:label "footer"@en ;
+    rdfs:comment "The bottom section of a document containing supplementary information such as page numbers, disclaimers, contact information, or legal notices. Footers typically appear on each page of multi-page documents."@en ;
+    rdfs:subClassOf doco:BackMatter ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Classes - Table Components
+#################################################################
+
+doco-fd:TableRow a owl:Class ;
+    rdfs:label "table row"@en ;
+    rdfs:comment "A horizontal sequence of table cells representing a single record or entry in a tabular structure. Rows organize data into logical units across columns."@en ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:TableCell a owl:Class ;
+    rdfs:label "table cell"@en ;
+    rdfs:comment "An individual data container within a table, located at the intersection of a row and column. Table cells contain the actual data values in tabular structures."@en ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:TableHeader a owl:Class ;
+    rdfs:label "table header"@en ;
+    rdfs:comment "A cell that provides a descriptive label for a column or row in a table, helping users understand the meaning of data in that column or row."@en ;
+    rdfs:subClassOf doco-fd:TableCell ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Object Properties - Structural Relationships
+#################################################################
+
+doco-fd:hasField a owl:ObjectProperty ;
+    rdfs:label "has field"@en ;
+    rdfs:comment "Indicates that a form section contains a specific form field. This property establishes the hierarchical relationship between sections and their constituent fields."@en ;
+    rdfs:domain doco-fd:FormSection ;
+    rdfs:range doco-fd:FormField ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:hasRow a owl:ObjectProperty ;
+    rdfs:label "has row"@en ;
+    rdfs:comment "Indicates that a table contains a specific row. This property establishes the parent-child relationship between tables and rows."@en ;
+    rdfs:domain doco:Table ;
+    rdfs:range doco-fd:TableRow ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:hasCell a owl:ObjectProperty ;
+    rdfs:label "has cell"@en ;
+    rdfs:comment "Indicates that a table row contains a specific cell. This property establishes the parent-child relationship between rows and cells."@en ;
+    rdfs:domain doco-fd:TableRow ;
+    rdfs:range doco-fd:TableCell ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Data Properties - Field Content
+#################################################################
+
+doco-fd:fieldLabel a owl:DatatypeProperty ;
+    rdfs:label "field label"@en ;
+    rdfs:comment "The descriptive text that identifies what information a form field contains (e.g., 'Patient Name:', 'Invoice Number:', 'Date of Birth:'). Field labels provide human-readable context for form data."@en ;
+    rdfs:domain doco-fd:FormField ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:fieldValue a owl:DatatypeProperty ;
+    rdfs:label "field value"@en ;
+    rdfs:comment "The actual data content of a form field. This is the user-entered or system-generated value associated with the field's label."@en ;
+    rdfs:domain doco-fd:FormField ;
+    rdfs:range rdfs:Literal ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Data Properties - Table Content
+#################################################################
+
+doco-fd:cellValue a owl:DatatypeProperty ;
+    rdfs:label "cell value"@en ;
+    rdfs:comment "The textual or numeric content contained within a table cell. This is the actual data displayed in the cell."@en ;
+    rdfs:domain doco-fd:TableCell ;
+    rdfs:range rdfs:Literal ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:columnHeader a owl:DatatypeProperty ;
+    rdfs:label "column header"@en ;
+    rdfs:comment "The descriptive text at the top of a table column that identifies the type of data contained in that column. Column headers provide semantic meaning to columnar data."@en ;
+    rdfs:domain doco-fd:TableHeader ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:rowHeader a owl:DatatypeProperty ;
+    rdfs:label "row header"@en ;
+    rdfs:comment "The descriptive text at the beginning of a table row that identifies the type of data contained in that row. Row headers provide semantic meaning to row data."@en ;
+    rdfs:domain doco-fd:TableHeader ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Data Properties - Positioning and Layout
+#################################################################
+
+doco-fd:rowIndex a owl:DatatypeProperty ;
+    rdfs:label "row index"@en ;
+    rdfs:comment "The zero-based position of a row within its parent table, used for maintaining row order."@en ;
+    rdfs:domain doco-fd:TableRow ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+doco-fd:columnIndex a owl:DatatypeProperty ;
+    rdfs:label "column index"@en ;
+    rdfs:comment "The zero-based position of a cell within its parent row, used for maintaining column order."@en ;
+    rdfs:domain doco-fd:TableCell ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:isDefinedBy <http://purl.org/doco-fd/> .
+
+#################################################################
+#    Annotation Properties
+#################################################################
+
+dc:creator a owl:AnnotationProperty .
+dc:date a owl:AnnotationProperty .
+dc:description a owl:AnnotationProperty .
+dc:rights a owl:AnnotationProperty .
+dc:title a owl:AnnotationProperty .
+
+#################################################################
+#    End of Ontology
+#################################################################

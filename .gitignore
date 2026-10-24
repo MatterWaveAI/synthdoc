@@ -1,0 +1,55 @@
+# Generated data
+data/
+generated_documents/
+test_output/
+data1/
+data2/
+run2/
+# Logs
+logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.bak
+.cache/
+# Build
+.venv/
+*.whl
+# The synthdoc-templates collection, cloned here in a source checkout
+src/synthdoc/templates/library/

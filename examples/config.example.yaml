@@ -1,0 +1,90 @@
+# Example configuration file for synthetic document generation
+# Copy to .synthetic-docs.yaml or ~/.synthetic-docs/config.yaml
+
+output:
+  # Base directory for all outputs
+  base_dir: "data"
+
+  # Subdirectory names (relative to base_dir)
+  images_subdir: "images"
+  labels_subdir: "labels"
+  html_subdir: "html"
+  pdfs_subdir: "pdfs"
+
+  # Output formats to generate
+  # Options: json, ttl, jsonld, ontology
+  # "ontology" emits .ontology.json files conforming to schemas/v1.0/document.schema.json
+  formats:
+    - json
+    - ttl
+    - jsonld
+    # - ontology
+
+  # Whether to keep PDF files
+  keep_pdfs: true
+
+  # Whether to create overlay images with bounding boxes
+  create_overlays: true
+
+  # Whether to create test output with diagnostics
+  create_test_output: false
+
+generation:
+  # Image resolution (DPI)
+  dpi: 300
+
+  # Image format (jpg, png)
+  image_format: "jpg"
+
+  # Number of documents to generate per template
+  count_per_template: 10
+
+  # Specific templates to use (null = all templates)
+  # templates:
+  #   - invoice
+  #   - receipt
+  #   - contract
+  templates: null
+
+  # Entity types to include (null = all entity types)
+  # Options: PERSON, ORG, IDENTIFIER, DATE, MONEY, ADDRESS, CONTACT, TEXT, FIELD_LABEL
+  # entity_types:
+  #   - PERSON
+  #   - ORG
+  #   - DATE
+  entity_types: null
+
+  # Minimum bounding box size in normalized units (0-1000)
+  min_bbox_size: 5
+
+  # Padding around bounding boxes in pixels
+  bbox_padding: 0
+
+  # Whether to filter out boxes smaller than min_bbox_size
+  filter_tiny_boxes: true
+
+  # Random seed for deterministic generation (null = random)
+  deterministic_seed: null
+
+validation:
+  # Strict validation mode (warnings become errors)
+  strict_mode: false
+
+  # Validate templates before generation
+  validate_before_generation: true
+
+  # IoU threshold for overlap warnings (0.0-1.0)
+  max_overlap_threshold: 0.8
+
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_level: "INFO"
+
+  # Whether to log to file
+  log_to_file: true
+
+  # Whether to log to console
+  log_to_console: true
+
+  # Log directory (relative to project root)
+  log_dir: "logs"

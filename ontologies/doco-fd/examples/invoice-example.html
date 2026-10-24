@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:schema="http://schema.org/"
+      xmlns:doco="http://purl.org/spar/doco/"
+      xmlns:doco-fd="http://purl.org/doco-fd/"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<head>
+    <title>Invoice Example - DoCO-FD</title>
+    <meta charset="UTF-8"/>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; }
+        header { border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
+        section { margin: 30px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; font-weight: bold; }
+        .field { margin: 10px 0; }
+        .field-label { font-weight: bold; display: inline-block; width: 150px; }
+        .field-value { display: inline-block; }
+        .total { font-size: 1.2em; font-weight: bold; margin: 20px 0; }
+        footer { border-top: 1px solid #ccc; padding-top: 20px; margin-top: 40px; font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body typeof="schema:Invoice doco:BodyMatter" resource="#invoice">
+
+    <!-- Document Header -->
+    <header typeof="doco-fd:Header" resource="#header">
+        <h1 property="doco:title">Invoice</h1>
+
+        <div class="field" typeof="doco-fd:FormField" resource="#invoiceNumber">
+            <span class="field-label" property="doco-fd:fieldLabel">Invoice Number:</span>
+            <span class="field-value" property="schema:identifier doco-fd:fieldValue">INV-2026-001</span>
+        </div>
+
+        <div class="field" typeof="doco-fd:FormField" resource="#invoiceDate">
+            <span class="field-label" property="doco-fd:fieldLabel">Invoice Date:</span>
+            <span class="field-value" property="schema:dateIssued doco-fd:fieldValue">January 13, 2026</span>
+        </div>
+    </header>
+
+    <!-- Customer Information Section -->
+    <section typeof="doco-fd:FormSection" resource="#customerInfo">
+        <h2 property="doco:sectionTitle">Customer Information</h2>
+
+        <div class="field" typeof="schema:Person doco-fd:FormField" resource="#customer">
+            <span class="field-label" property="doco-fd:fieldLabel">Customer Name:</span>
+            <span class="field-value" property="schema:name foaf:name doco-fd:fieldValue">John Smith</span>
+        </div>
+
+        <div class="field" typeof="schema:Organization doco-fd:FormField" resource="#company">
+            <span class="field-label" property="doco-fd:fieldLabel">Company:</span>
+            <span class="field-value" property="schema:name doco-fd:fieldValue">Acme Corporation</span>
+        </div>
+
+        <div class="field" typeof="schema:PostalAddress doco-fd:FormField" resource="#billingAddress">
+            <span class="field-label" property="doco-fd:fieldLabel">Billing Address:</span>
+            <span class="field-value" property="schema:streetAddress doco-fd:fieldValue">123 Main Street, Suite 100, Anytown, CA 90210</span>
+        </div>
+
+        <div class="field" typeof="doco-fd:FormField" resource="#email">
+            <span class="field-label" property="doco-fd:fieldLabel">Email:</span>
+            <span class="field-value" property="schema:email doco-fd:fieldValue">john.smith@acme.com</span>
+        </div>
+    </section>
+
+    <!-- Line Items Table -->
+    <section typeof="doco-fd:FormSection" resource="#lineItemsSection">
+        <h2 property="doco:sectionTitle">Line Items</h2>
+
+        <table typeof="doco:Table" resource="#lineItemsTable">
+            <caption property="doco:caption">Products and Services</caption>
+
+            <thead>
+                <tr typeof="doco-fd:TableRow" resource="#headerRow">
+                    <th typeof="doco-fd:TableHeader" property="doco-fd:columnHeader">Description</th>
+                    <th typeof="doco-fd:TableHeader" property="doco-fd:columnHeader">Quantity</th>
+                    <th typeof="doco-fd:TableHeader" property="doco-fd:columnHeader">Unit Price</th>
+                    <th typeof="doco-fd:TableHeader" property="doco-fd:columnHeader">Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr typeof="doco-fd:TableRow" resource="#item1">
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">Professional Services - Consulting</td>
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">40 hours</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$150.00</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$6,000.00</td>
+                </tr>
+
+                <tr typeof="doco-fd:TableRow" resource="#item2">
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">Software License - Annual</td>
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">5 licenses</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$299.00</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$1,495.00</td>
+                </tr>
+
+                <tr typeof="doco-fd:TableRow" resource="#item3">
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">Training Workshop</td>
+                    <td typeof="doco-fd:TableCell" property="doco-fd:cellValue">1 session</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$2,500.00</td>
+                    <td typeof="doco-fd:TableCell schema:MonetaryAmount"
+                        property="doco-fd:cellValue schema:value">$2,500.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Totals Section -->
+    <section typeof="doco-fd:FormSection" resource="#totalsSection">
+        <h2 property="doco:sectionTitle">Summary</h2>
+
+        <div class="field" typeof="doco-fd:KeyValuePair schema:MonetaryAmount" resource="#subtotal">
+            <span class="field-label" property="doco-fd:fieldLabel">Subtotal:</span>
+            <span class="field-value" property="schema:value doco-fd:fieldValue">$9,995.00</span>
+        </div>
+
+        <div class="field" typeof="doco-fd:KeyValuePair schema:MonetaryAmount" resource="#tax">
+            <span class="field-label" property="doco-fd:fieldLabel">Tax (8.5%):</span>
+            <span class="field-value" property="schema:value doco-fd:fieldValue">$849.58</span>
+        </div>
+
+        <div class="field total" typeof="doco-fd:KeyValuePair schema:MonetaryAmount" resource="#total">
+            <span class="field-label" property="doco-fd:fieldLabel">Total Amount:</span>
+            <span class="field-value" property="schema:value doco-fd:fieldValue">$10,844.58</span>
+        </div>
+    </section>
+
+    <!-- Payment Information Section -->
+    <section typeof="doco-fd:FormSection" resource="#paymentInfo">
+        <h2 property="doco:sectionTitle">Payment Information</h2>
+
+        <div class="field" typeof="doco-fd:FormField" resource="#dueDate">
+            <span class="field-label" property="doco-fd:fieldLabel">Due Date:</span>
+            <span class="field-value" property="schema:paymentDueDate doco-fd:fieldValue">February 13, 2026</span>
+        </div>
+
+        <div class="field" typeof="doco-fd:FormField" resource="#paymentTerms">
+            <span class="field-label" property="doco-fd:fieldLabel">Payment Terms:</span>
+            <span class="field-value" property="doco-fd:fieldValue">Net 30 days</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer typeof="doco-fd:Footer" resource="#footer">
+        <p property="doco:footnote">
+            All amounts are in USD. Payment is due within 30 days of invoice date.
+            Late payments subject to 1.5% monthly interest charge.
+            Make checks payable to: Acme Corporation.
+        </p>
+        <p>Thank you for your business!</p>
+    </footer>
+
+</body>
+</html>

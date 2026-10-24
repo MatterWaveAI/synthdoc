@@ -1,0 +1,13 @@
+# Standard Configuration
+# Generates 816×1056 pixel images matching PDF dimensions
+# All coordinates align perfectly across PDF, images, and overlays
+
+generation:
+  dpi: 96  # Produces 816×1056 px for 8.5"×11" pages
+  image_format: "jpg"
+  count_per_template: 10
+
+output:
+  base_dir: "data"
+  keep_pdfs: true
+  formats: ["json", "ttl", "jsonld", "ontology"]
